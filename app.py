@@ -1,10 +1,9 @@
-from flask import Flask
+from flask import Flask, flash, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 import radish as r
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from flask_login import LoginManager
-from flask_login import UserMixin
+from flask_login import LoginManager, UserMixin
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
@@ -31,6 +30,23 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
 
+class RegistrationForm(FlaskForm):
+    username = StringField("username", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password1 = PasswordField("Password", validators=[DataRequired()])
+    password2 = PasswordField(
+        "Confirm Password", validators=[DataRequired(), EqualTo("password1")]
+    )
+    submit = SubmitField("Register")
+
+
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    remember = BooleanField("Remember Me", validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+
 SECRET_KEY = os.urandom(32)
 app.config["SECRET_KEY"] = SECRET_KEY
 
@@ -41,3 +57,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
+
+
+@app.route("/home")
+def home():
+    return render_template("index.html")
