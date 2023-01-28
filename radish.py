@@ -18,7 +18,12 @@ def textGeneration():
         "What restaurants do you like? (input a comma separated list) "
     ).strip()
     favFoods = input("What are your favourite foods? (input a comma separated list) ")
-    prompt = f"This is a conversation between someone looking for food recommendations and their friend who will recommend similar food to the ones that the other person already likes. Friend looking for food recommendations: 'I like to eat at {favRestaurants} and my favourite foods are {favFoods} what food do you think I should try? Friend who will recommend food: I thnk you should try these dishes:"
+    prompt = f"""This is a conversation between someone looking for food 
+    recommendations and their friend who will recommend similar food to the 
+    ones that the other person already likes. Friend looking for food 
+    recommendations: 'I like to eat at {favRestaurants} and my favourite foods 
+    are {favFoods} what food do you think I should try? Friend who will 
+    recommend food: I thnk you should try these dishes:"""
 
     response = co.generate(
         prompt=prompt, model="xlarge", temperature=0.6, max_tokens=100
