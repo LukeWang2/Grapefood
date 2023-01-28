@@ -21,12 +21,12 @@ def textGeneration():
     print(response.generations[0].text)
 
 
+def calculate_similarity(a, b):
+    # compare themes
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+
 def checkSimilary(phrase1, phrase2):
     phrases = [phrase1, phrase2]
     p1, p2 = co.embed(phrases).embeddings
     return calculate_similarity(p1, p2)
-
-
-def calculate_similarity(a, b):
-    # compare thems
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
