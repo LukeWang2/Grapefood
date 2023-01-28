@@ -1,9 +1,15 @@
 from flask import Flask, flash, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-import radish as r
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from flask_login import LoginManager, UserMixin, login_user, current_user
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    current_user,
+    login_required,
+    logout_user,
+)
 from datetime import datetime
 from forms import RegistrationForm, LoginForm
 
@@ -68,3 +74,15 @@ def login():
             return redirect(next or url_for("home"))
         flash("Invalid email address or Password.")
     return render_template("login.html", form=form)
+
+
+@app.route("/forbidden", methods=["GET", "POST"])
+@login_required
+def protected():
+    return redirect(url_for("forbidden.html"))
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
