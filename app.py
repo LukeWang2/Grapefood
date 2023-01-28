@@ -6,6 +6,10 @@ import os
 from flask_login import LoginManager
 from flask_login import UserMixin
 from datetime import datetime
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Email, EqualTo
+
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -32,3 +36,8 @@ app.config["SECRET_KEY"] = SECRET_KEY
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydb.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
