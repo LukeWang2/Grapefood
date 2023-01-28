@@ -23,7 +23,7 @@ def textGeneration():
     ones that the other person already likes. Friend looking for food 
     recommendations: 'I like to eat at {favRestaurants} and my favourite foods 
     are {favFoods} what food do you think I should try? Friend who will 
-    recommend food: I thnk you should try these dishes:"""
+    recommend food: I think you should try these dishes:"""
 
     response = co.generate(
         prompt=prompt, model="xlarge", temperature=0.6, max_tokens=100
