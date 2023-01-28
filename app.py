@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request, url_for
+from flask import Flask, flash, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 import radish as r
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,7 +8,7 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
-
+from forms import Registrationform
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -62,3 +62,15 @@ def load_user(user_id):
 @app.route("/home")
 def home():
     return render_template("index.html")
+
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password1.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for("login"))
+    return render_template("registration.html", form=form)
