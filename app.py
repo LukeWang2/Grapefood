@@ -3,12 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 import radish as r
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_user, current_user
 from datetime import datetime
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo
-from forms import Registrationform
+from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -28,23 +25,6 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-
-class RegistrationForm(FlaskForm):
-    username = StringField("username", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password1 = PasswordField("Password", validators=[DataRequired()])
-    password2 = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password1")]
-    )
-    submit = SubmitField("Register")
-
-
-class LoginForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember = BooleanField("Remember Me", validators=[DataRequired()])
-    submit = SubmitField("Login")
 
 
 SECRET_KEY = os.urandom(32)
@@ -74,3 +54,17 @@ def register():
         db.session.commit()
         return redirect(url_for("login"))
     return render_template("registration.html", form=form)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None and user.check_password(form.password.data):
+            login_user(user)
+            next = request.args.get("next")
+            return redirect(next or url_for("home"))
+        flash("Invalid email address or Password.")
+    return render_template("login.html", form=form)
