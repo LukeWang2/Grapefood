@@ -1,4 +1,13 @@
 import cohere
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/api")
+def test():
+    return "foo"
+
 
 co = cohere.Client("syQmRBFrWWq3tpYnYwLz0TZuqIxjhitXqUbmWR5J")
 prompt = input("Test").strip()
