@@ -32,3 +32,8 @@ def checkSimilary(phrase1, phrase2):
     phrases = [phrase1, phrase2]
     p1, p2 = co.embed(phrases).embeddings
     return calculateSimilarity(p1, p2)
+
+
+# find users which have the most similarities and recommend them
+def recommendUsers():
+    ...
