@@ -18,7 +18,7 @@ def textGeneration():
     recommend food: I think you should try these dishes:"""
 
     response = co.generate(
-        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=100
+        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=50
     )
     print(response.generations[0].text)
 
@@ -36,4 +36,5 @@ def checkSimilary(phrase1, phrase2):
 
 # find users which have the most similarities and recommend them
 def recommendUsers():
+
     ...
