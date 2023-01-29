@@ -58,7 +58,7 @@ def generateFoodRecommendations(favRestaurants, favFoods):
     recommend food: I think you should try these dishes:"""
 
     response = co.generate(
-        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=30
+        prompt=prompt, model="medium", temperature=0.6, max_tokens=20
     )
     return response.generations[0].text
 
@@ -72,7 +72,7 @@ def generateRestaurantRecommendations(favRestaurants, favFoods):
     recommend a restaurants: I think you should try these restaurants:"""
 
     response = co.generate(
-        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=30
+        prompt=prompt, model="medium", temperature=0.6, max_tokens=30
     )
     return response.generations[0].text
 
