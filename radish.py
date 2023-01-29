@@ -17,7 +17,7 @@ table = db.Table("user_interests")
 co = cohere.Client("")
 
 
-def registerUser(username, password="", contact):
+def registerUser(username, contact, password=""):
     try:
         table.put_item(
             Item={

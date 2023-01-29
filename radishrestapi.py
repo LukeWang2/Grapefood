@@ -19,7 +19,7 @@ def user():
     elif action == "getinterest":
         return r.getInterests(username)
     elif action == "adduser":
-        r.registerUser(username, password, contact)
+        r.registerUser(username, contact, password)
     elif action == "deleteuser":
         r.deleteUser(username)
     elif action == "recommendusers":
