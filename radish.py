@@ -1,13 +1,11 @@
-import cohere
+import cohere, boto3
 import numpy as np
-import boto3
-from boto3.dynamodb.conditions import Key
 
 AWS_ACCESS_KEY_ID = "AKIA4EX46IN5ZBZ3VRPW"
 AWS_SECRET_ACCESS_KEY = "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"
 REGION_NAME = "ca-central-1"
 
-# client is an interface that interacts with AWS
+
 db = boto3.resource(
     "dynamodb",
     aws_access_key_id=AWS_ACCESS_KEY_ID,
@@ -45,6 +43,10 @@ def storeInterests(username, interests):
 def getInterests(username):
     response = table.get_item(Key={"user": username})
     return str(response["Item"]["interests"]).replace("[", "").replace("]", "")
+
+
+def deleteUser(username):
+    table.delete_item(Key={"user": username})
 
 
 def generateFoodRecommendations(favRestaurants, favFoods):
