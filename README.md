@@ -1,4 +1,5 @@
-# McHacks10 Radish Project
+# McHacks10 Grapefood
 
-to-do:
-- front end devlopment (bootstrap, velo)
+An application to meet new friends and discover new foods through co:here AI and similarity of food interests.
+
+
