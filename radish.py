@@ -19,10 +19,15 @@ table = db.Table("user_interests")
 co = cohere.Client("syQmRBFrWWq3tpYnYwLz0TZuqIxjhitXqUbmWR5J")
 
 
-def registerUser(username, password):
+def registerUser(username, password, contact):
     try:
         table.put_item(
-            Item={"user": username, "pass": password, "interests": ""},
+            Item={
+                "user": username,
+                "pass": password,
+                "contact": contact,
+                "interests": [],
+            },
             ConditionExpression=f"attribute_not_exists(Username)",
         )
     except:
@@ -93,6 +98,21 @@ def checkSimilary(phrase1, phrase2):
 
 
 # find users which have the most similarities and recommend them
-def recommendUsers():
+def recommendUsers(username):
+    response = table.scan()["Items"]
+    recommended = []
+    for user in response:
+        if user["user"] == username:
+            pass
+        similar = checkSimilary(
+            str(user["interests"]).replace("[", "").replace("]", "")
+        )
+        if similar >= 0.7:
+            recommended.append((user["user"], user["contact"]))
+    if len(recommended) == 0:
+        return "No users have similar enough interests"
+    end = ""
+    for u, c in recommended:
 
-    ...
+        end += f"{u} has similar food interests to you and their contact info is {c}\n"
+    return end
