@@ -1,8 +1,8 @@
 import cohere, boto3
 import numpy as np
 
-AWS_ACCESS_KEY_ID = "AKIA4EX46IN5ZBZ3VRPW"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = ""
+AWS_SECRET_ACCESS_KEY = ""
 REGION_NAME = "ca-central-1"
 
 
@@ -58,7 +58,7 @@ def generateFoodRecommendations(favRestaurants, favFoods):
     recommend food: I think you should try these dishes:"""
 
     response = co.generate(
-        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=50
+        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=30
     )
     return response.generations[0].text
 
@@ -72,7 +72,7 @@ def generateRestaurantRecommendations(favRestaurants, favFoods):
     recommend a restaurants: I think you should try these restaurants:"""
 
     response = co.generate(
-        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=50
+        prompt=prompt, model="xlarge", temperature=0.6, max_tokens=30
     )
     return response.generations[0].text
 
