@@ -14,7 +14,7 @@ db = boto3.resource(
 )
 table = db.Table("user_interests")
 
-co = cohere.Client("syQmRBFrWWq3tpYnYwLz0TZuqIxjhitXqUbmWR5J")
+co = cohere.Client("")
 
 
 def registerUser(username, password, contact):
