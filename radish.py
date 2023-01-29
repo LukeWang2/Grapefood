@@ -78,10 +78,6 @@ def generateRestaurantRecommendations(favRestaurants, favFoods):
 
 
 def generateRecommendation(type, favRestaurants, favFoods):
-    # favRestaurants = input(
-    #     "What restaurants do you like? (input a comma separated list) "
-    # ).strip()
-    # favFoods = input("What are your favourite foods? (input a comma separated list) ")
     if type == "food":
         return generateFoodRecommendations(favRestaurants, favFoods)
     elif type == "restaurant":
